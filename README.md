@@ -30,7 +30,7 @@ $ curl -d '{"name": "new task", "description":"this is a new task"}' 'http://loc
    "taskId" : "51111f9922e47adb1d000001"
 }
 
-$ curl -s http://localhost:3000/
+$ curl -s http://localhost:3000/tasks
 [
 
   { 
