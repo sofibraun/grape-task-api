@@ -1,35 +1,45 @@
 GEM
   remote: http://rubygems.org/
   specs:
-    activemodel (3.2.2)
-      activesupport (= 3.2.2)
+    activemodel (3.2.11)
+      activesupport (= 3.2.11)
       builder (~> 3.0.0)
-    activesupport (3.2.2)
+    activesupport (3.2.11)
       i18n (~> 0.6)
       multi_json (~> 1.0)
-    bson (1.6.1)
+    backports (2.6.7)
+    bson (1.6.4)
     bson_ext (1.6.1)
       bson (~> 1.6.1)
-    builder (3.0.0)
+    builder (3.0.4)
     daemons (1.1.8)
+    descendants_tracker (0.0.1)
     eventmachine (0.12.10)
-    grape (0.1.5)
-      multi_json
-      multi_xml
+    grape (0.2.6)
+      activesupport
+      builder
+      hashie (~> 1.2)
+      multi_json (>= 1.3.2)
+      multi_xml (>= 0.5.2)
       rack
-      rack-jsonp
+      rack-accept
       rack-mount
-    i18n (0.6.0)
-    mongo (1.6.1)
-      bson (~> 1.6.1)
-    mongoid (2.4.6)
+      virtus
+    hashie (1.2.0)
+    i18n (0.6.1)
+    mongoid (3.0.21)
       activemodel (~> 3.1)
-      mongo (~> 1.3)
+      moped (~> 1.2)
+      origin (~> 1.0)
       tzinfo (~> 0.3.22)
-    multi_json (1.1.0)
-    multi_xml (0.4.2)
-    rack (1.4.1)
-    rack-jsonp (1.3.0)
+    moped (1.3.2)
+    multi_json (1.5.0)
+    multi_xml (0.5.2)
+    origin (1.0.11)
+    rack (1.5.1)
+    rack-accept (0.4.5)
+      rack (>= 0.4)
+    rack-cors (0.2.7)
       rack
     rack-mount (0.8.3)
       rack (>= 1.0.0)
@@ -37,13 +47,17 @@ GEM
       daemons (>= 1.0.9)
       eventmachine (>= 0.12.6)
       rack (>= 1.0.0)
-    tzinfo (0.3.32)
+    tzinfo (0.3.35)
+    virtus (0.5.4)
+      backports (~> 2.6.1)
+      descendants_tracker (~> 0.0.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   bson_ext
-  grape
-  mongoid
+  grape (~> 0.2.6)
+  mongoid (~> 3.0.21)
+  rack-cors
   thin

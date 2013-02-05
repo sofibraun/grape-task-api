@@ -1,20 +1,41 @@
 require 'grape'
+require 'rack/cors'
 
 class API < Grape::API
 
-  get "/" do
-    Thing.find :all
+  format :json
+  content_type :txt, "text/plain"
+
+  get "tasks" do
+    Task.all
   end
 
-  post "/" do
-    # All parameters will be stored in the model
-    thing = Thing.new params
+  get 'tasks/:id' do
+    Task.find(params[:id])
+  end
 
-    if thing.save
-      { thingId: thing.id }
+  post "tasks" do
+    task = Task.new name: params[:name], description: params[:description]
+    if task.save
+      { taskId: task.id }
     else
-      error!({ errors: thing.errors.messages }, 403)
+      error!({ errors: task.errors.messages }, 403)
     end
+  end
+
+  put "tasks/:id" do
+    task = Task.find(params[:id])
+    task.name = params[:name]
+    task.description = params[:description]
+    if task.save
+      { taskId: task.id }
+    else
+      error!({ errors: task.errors.messages }, 403)
+    end
+  end
+
+  delete "tasks/:id" do
+    Task.find(params[:id]).destroy
   end
 
 end

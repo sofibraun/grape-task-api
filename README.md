@@ -1,64 +1,51 @@
-# Installation
+# Grape Task API
+
+This is an example of an API made with [Grape](https://github.com/intridea/grape) and [MongoId](http://mongoid.org/). It can be tested with [this](https://github.com/sofibraun/angularjs-task-example) client made with angularjs.
+
+## Installation
 
 ```
-  $ git clone git://github.com/ayosec/grape-mongoid.git
-  $ cd grape-mongoid
-  $ bundle install --binstubs
+  $ git clone git://github.com/sofibraun/grape-task-api.git
+  $ cd grape-task-api
+  $ bundle install
   $ bin/thin start
 ```
 
-# Example with curl
+## Example with curl
 
 ```
-$ curl -s http://localhost:3000/ | json_pp
+$ curl -s http://localhost:3000/tasks
 []
 
-$ curl -s -d 'failed=1' http://localhost:3000/ | json_pp
+$ curl -s -d '{"failed":"1"}' http://localhost:3000/tasks
 {
-   "errors" : {
-      "name" : [
-         "can't be blank"
-      ]
-   }
+  "errors": {
+        "name": ["can't be blank"],
+        "description":["can't be blank"]
+  }
 }
 
-$ curl -s -d 'name=this+item&foo=bar&this=that' http://localhost:3000/ | json_pp
+$ curl -d '{"name": "new task", "description":"this is a new task"}' 'http://localhost:3000/tasks' -H Content-Type:application/json -v
 {
-   "thingId" : "4f64a387d1dd1b129d000002"
+   "taskId" : "51111f9922e47adb1d000001"
 }
 
-$ curl -s http://localhost:3000/ | json_pp
+$ curl -s http://localhost:3000/
 [
-   {
-      "created_at" : "2012-03-17T14:45:27+00:00",
-      "updated_at" : "2012-03-17T14:45:27+00:00",
-      "_id" : "4f64a387d1dd1b129d000002",
-      "name" : "this item",
-      "foo" : "bar",
-      "this" : "that"
-   }
+
+  { 
+    "_id":"51111f9922e47adb1d000001",
+    "created_at":"2013-02-05T12:04:57-03:00",
+    "description":"this is a new task",
+    "name":"new task",
+    "updated_at":"2013-02-05T12:04:57-03:00"
+    }
 ]
 
-$ curl -s -d 'name=second+item' http://localhost:3000/ | json_pp
+$ curl -i -X PUT -d '{"_id":"<validId>", "name":"new name"}' http://localhost:3000/tasks/<validId> -H "Content-Type: application/json"
 {
-   "thingId" : "4f64a394d1dd1b129d000003"
+   "taskId" : "4f64a394d1dd1b129d000003"
 }
 
-$ curl -s http://localhost:3000/ | json_pp
-[
-   {
-      "created_at" : "2012-03-17T14:45:27+00:00",
-      "updated_at" : "2012-03-17T14:45:27+00:00",
-      "_id" : "4f64a387d1dd1b129d000002",
-      "name" : "this item",
-      "foo" : "bar",
-      "this" : "that"
-   },
-   {
-      "created_at" : "2012-03-17T14:45:40+00:00",
-      "updated_at" : "2012-03-17T14:45:40+00:00",
-      "_id" : "4f64a394d1dd1b129d000003",
-      "name" : "second item"
-   }
-]
+$ curl -i -H "Content-Type: application/json" -X DELETE http://localhost:3000/tasks/<validId> -v
 ```
